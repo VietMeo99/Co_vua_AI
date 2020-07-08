@@ -220,7 +220,7 @@ var makeBestMove = function () {
     board.position(game.fen());
     renderMoveHistory(game.history());
     if (game.game_over()) {
-        alert('Game over');
+        alert('Trò chơi kết thúc');
     }
 };
 
@@ -228,7 +228,7 @@ var makeBestMove = function () {
 var positionCount;
 var getBestMove = function (game) {
     if (game.game_over()) {
-        alert('Game over');
+        alert('Trò chơi kết thúc');
     }
 
     positionCount = 0;
