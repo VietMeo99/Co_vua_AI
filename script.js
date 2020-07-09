@@ -1,6 +1,7 @@
 var board,
     game = new Chess();
 
+    
 /* Code AI */
 
 var minimaxRoot =function(depth, game, isMaximisingPlayer) {  // tính nước đi của máy
@@ -8,7 +9,6 @@ var minimaxRoot =function(depth, game, isMaximisingPlayer) {  // tính nước �
     var newGameMoves = game.ugly_moves(); 
     var bestMove = -9999; // nước tốt nhất cần đi
     var bestMoveFound;
-
     for(var i = 0; i < newGameMoves.length; i++) {
         var newGameMove = newGameMoves[i]
         game.ugly_move(newGameMove); // lưu lại vtri 
@@ -20,15 +20,16 @@ var minimaxRoot =function(depth, game, isMaximisingPlayer) {  // tính nước �
         }
     }
     return bestMoveFound;
-};
-
-
-// xác định máy đi, người đi
-var minimax = function (depth, game, alpha, beta, isMaximisingPlayer) {
+  };
+  
+  
+  // xác định máy đi, người đi
+  var minimax = function (depth, game, alpha, beta, isMaximisingPlayer) {
     positionCount++; // đánh giá vị trí
     if (depth === 0) {
+      // console.log("board ... ",  game.board());
       // console.log(-evaluateBoard(game.board()));
-        return -evaluateBoard(game.board());
+      return -evaluateBoard(game.board());
     }
 
     var newGameMoves = game.ugly_moves(); // trả về các di chuyển có thể tại thời điểm này của máy
@@ -38,7 +39,7 @@ var minimax = function (depth, game, alpha, beta, isMaximisingPlayer) {
         for (var i = 0; i < newGameMoves.length; i++) {
             game.ugly_move(newGameMoves[i]);
             bestMove = Math.max(bestMove, minimax(depth - 1, game, alpha, beta, !isMaximisingPlayer));
-            game.undo(); // hoàn tác
+            game.undo(); 
             alpha = Math.max(alpha, bestMove);
             if (beta <= alpha) { // cắt tỉa alpha 
                 return bestMove;
@@ -50,7 +51,7 @@ var minimax = function (depth, game, alpha, beta, isMaximisingPlayer) {
         for (var i = 0; i < newGameMoves.length; i++) {
             game.ugly_move(newGameMoves[i]);
             bestMove = Math.min(bestMove, minimax(depth - 1, game, alpha, beta, !isMaximisingPlayer));
-            game.undo(); // hoàn tác
+            game.undo(); 
             beta = Math.min(beta, bestMove);
             if (beta <= alpha) {
                 return bestMove;
@@ -199,7 +200,6 @@ var getPieceValue = function (piece, x, y) { // trả về điểm và vị trí
         }
         throw "Unknown piece type: " + piece.type;
     };
-
     var absoluteValue = getAbsoluteValue(piece, piece.color === 'w', x ,y);
     return piece.color === 'w' ? absoluteValue : -absoluteValue;
 };
@@ -217,7 +217,7 @@ var onDragStart = function (source, piece, position, orientation) {
 var makeBestMove = function () {
     var bestMove = getBestMove(game);
     game.ugly_move(bestMove);
-    board.position(game.fen());
+    board.position(game.fen()); // mô tả lại vị trí bán cờ , khời động game ở 1 ctri cụ thể
     renderMoveHistory(game.history());
     if (game.game_over()) {
         alert('Trò chơi kết thúc');
@@ -240,7 +240,7 @@ var getBestMove = function (game) {
     var moveTime = (d2 - d);
     // var positionsPerS = ( positionCount * 1000 / moveTime); // đánh giá hiệu quả
     // console.log("positionsPerS .... ",positionsPerS);
-    console.log("positionCount ....", positionCount);
+    // console.log("positionCount ....", positionCount);
 
     $('#position-count').text(positionCount);
     $('#time').text(moveTime/1000 + 's');
@@ -277,9 +277,9 @@ var onDrop = function (source, target) {
     window.setTimeout(makeBestMove, 250);
 };
 
-// var onSnapEnd = function () {
-//     board.position(game.fen());
-// };
+var onSnapEnd = function () {
+    board.position(game.fen());
+};
 
 var onMouseoverSquare = function(square, piece) {
     var moves = game.moves({  // trả lại di chuyển có thể, sẽ di chuyển
@@ -320,9 +320,9 @@ var cfg = {
     draggable: true,
     position: 'start',
     onDragStart: onDragStart,
-    onDrop: onDrop, // kéo thả quân cờ
+    onDrop: onDrop, 
     onMouseoutSquare: onMouseoutSquare, 
     onMouseoverSquare: onMouseoverSquare,
-    // onSnapEnd: onSnapEnd
+    onSnapEnd: onSnapEnd
 };
 board = ChessBoard('board', cfg);
