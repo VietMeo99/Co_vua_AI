@@ -1,7 +1,7 @@
 var board,
     game = new Chess();
 
-    
+
 /* Code AI */
 
 var minimaxRoot =function(depth, game, isMaximisingPlayer) {  // tính nước đi của máy
@@ -178,7 +178,7 @@ var kingEvalBlack = reverseArray(kingEvalWhite);
 //      1 | R  N  B  Q  K  B  N  R |
 //        +------------------------+
 //          a  b  c  d  e  f  g  h'
-// p là tốt
+// p là tốt, ...
 // piece có 2 thuộc tính type và color, piece là .board
 var getPieceValue = function (piece, x, y) { // trả về điểm và vị trí
     if (piece === null) {
