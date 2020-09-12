@@ -19,7 +19,7 @@
 }
 .title {
   text-align: center;
-  color: red;
+  color: #1bff00;
   font-size: 30px;
   font-weight: 700;
 }
@@ -79,7 +79,7 @@
 }
 
 .move-history {
-  max-height: 100px;
+  max-height: 72px;
   overflow-y: scroll;
 }
 #search-depth {
